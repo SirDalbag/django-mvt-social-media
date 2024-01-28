@@ -1,2 +1,22 @@
-# django-mvt-social-media
+# TwiiterX
 Social media on Django MVT
+
+## Key Features:
+* User registration and authorization, ability to edit profile
+* Creating, editing and deleting posts, ability to leave reactions and comments
+* Post feed, ability to follow other users
+
+## Technology Stack:
+* Django (MVT)
+* ORM 
+* HTML, CSS (Tailwind) and JavaScript
+
+## Getting Started:
+1. Clone the repository: `https://github.com/SirDalbag/django-mvt-social-media.git`
+2. Start the virtual environment: `python -m venv venv`
+3. Install dependencies: `pip install -r requirements.txt`
+4. Apply migrations: `python manage.py migrate`
+5. Start the server: `python manage.py runserver`
+---
+## License:
+This project is licensed under the terms of the [MIT License](https://github.com/SirDalbag/django-mvt-social-media/blob/main/LICENSE).
