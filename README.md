@@ -12,6 +12,7 @@ Social media on Django MVT
 * HTML, CSS (Tailwind) and JavaScript
 
 ## Getting Started:
+> Quick project launch: run `scripts/run.cmd`
 1. Clone the repository: `https://github.com/SirDalbag/django-mvt-social-media.git`
 2. Create and start the virtual environment: `python -m venv venv`, `call venv/scripts/activate`
     * If an error occurs when starting the virtual environment:
