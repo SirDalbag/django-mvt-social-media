@@ -7,15 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Twitter</title>
   <link rel="icon" href="{% static 'media/source/icon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'style/style.css' %}">
   <script src="{% static 'tailwind.js' %}"></script>
 </head>
 
-<body>
-  <div class="h-screen grid gap-4 grid-cols-3">
-    {% include "components/header.html" %}
-    {% block main %}{% endblock main %}
-    {% include "components/footer.html" %}
-  </div>
+<body class="bg-black">
+  {% block main %} {% endblock main %}
+  <script src="{% static 'js/script.js' %}"></script>
 </body>
 
 </html>
