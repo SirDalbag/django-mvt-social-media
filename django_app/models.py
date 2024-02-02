@@ -30,12 +30,12 @@ class Profile(models.Model):
     )
     avatar = models.ImageField(
         verbose_name="Avatar",
-        validators=[FileExtensionValidator(["jpg", "png", "jpeg"])],
+        validators=[FileExtensionValidator(["jpg", "png", "jpeg", "svg"])],
         unique=False,
         editable=True,
         blank=False,
         null=False,
-        default="profile/avatars/default.png",
+        default="profile/avatars/default.svg",
         upload_to="profile/avatars",
     )
     # TODO: Add Birth Date, Location and Bio fields

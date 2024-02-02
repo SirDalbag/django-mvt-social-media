@@ -143,19 +143,17 @@
         <div
             class="flex gap-3 items-center justify-between px-4 py-3 transition duration-500 ease-in-out cursor-pointer rounded-full hover:bg-zinc-800">
             <div class="flex gap-3">
-                <img class="w-8 h-8 2xl:w-10 2xl:h-10 rounded-full"
-                    src="{% static 'media\profile\avatars\default.png' %}">
+                <img class="w-8 h-8 2xl:w-10 2xl:h-10 rounded-full" src="{% static profile.avatar.url %}">
                 <a href="" class="hidden 2xl:block">
-                    <p class="font-semibold text-white text-sm">Sirotin Igor</p>
-                    <p class="font-normal text-gray-400 text-xs mb-1">@dalbag</p>
+                    <p class="font-semibold text-white text-base">{{ profile.name }}</p>
+                    <p class="font-normal text-gray-400 text-xs mb-1">@{{ profile.user.username }}</p>
                 </a>
             </div>
-            <a href="" class="ml-6 hidden 2xl:block">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
-                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="1"></circle>
-                    <circle cx="19" cy="12" r="1"></circle>
-                    <circle cx="5" cy="12" r="1"></circle>
+            <a href="{% url 'sign-out' %}" class="ml-6 hidden 2xl:block">
+                <svg class="transition duration-500 ease-in-out hover:stroke-sky-500 hover:stroke-2"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="#ffffff" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10 3H6a2 2 0 0 0-2 2v14c0 1.1.9 2 2 2h4M16 17l5-5-5-5M19.8 12H9" />
                 </svg>
             </a>
         </div>
