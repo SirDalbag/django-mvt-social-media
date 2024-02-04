@@ -9,7 +9,7 @@ Social media on Django MVT
 ## Technology Stack:
 * Django (MVT)
 * ORM 
-* HTML, CSS (Flowbite) and JavaScript
+* HTML, CSS (Tailwind) and JavaScript
 
 ## Getting Started:
 1. Clone the repository: `https://github.com/SirDalbag/django-mvt-social-media.git`
