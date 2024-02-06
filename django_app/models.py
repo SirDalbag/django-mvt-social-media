@@ -5,12 +5,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 # TODO: Realize Category and Tags for Post
-# class Category(models.Model):
-#     name = models.CharField(max_length=255)
-
-
-# class Tag(models.Model):
-#     name = models.CharField(max_length=255)
 
 
 class Profile(models.Model):
@@ -38,7 +32,23 @@ class Profile(models.Model):
         default="profile/avatars/default.svg",
         upload_to="profile/avatars",
     )
-    # TODO: Add Birth Date, Location and Bio fields
+    birth_date = models.DateField(
+        verbose_name="Birth Date",
+        blank=False,
+        null=True,
+    )
+    location = models.CharField(
+        verbose_name="Location",
+        blank=False,
+        null=True,
+        max_length=100,
+    )
+    bio = models.TextField(
+        verbose_name="Bio",
+        blank=False,
+        null=True,
+        max_length=150,
+    )
 
     class Meta:
         app_label = "auth"
@@ -60,21 +70,18 @@ class Post(models.Model):
     user = models.ForeignKey(
         verbose_name="User", to=User, on_delete=models.CASCADE, null=False, blank=True
     )
-    # category = models.ForeignKey(
-    #     verbose_name="Category", to=Category, on_delete=models.CASCADE
-    # )
-    # tags = models.ManyToManyField(verbose_name="Tags", to=Tag, on_delete=models.CASCADE)
     content = models.TextField(
         verbose_name="Content",
-        blank=True,
-        null=False,
+        blank=False,
+        null=True,
+        max_length=255,
     )
     image = models.ImageField(
         verbose_name="Image",
         validators=[FileExtensionValidator(["jpg", "png", "jpeg"])],
         upload_to="posts/image",
         null=True,
-        blank=True,
+        blank=False,
     )
     creation_date = models.DateTimeField(
         verbose_name="Creation date", auto_now_add=True, null=False, blank=True

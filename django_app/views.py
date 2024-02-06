@@ -9,7 +9,21 @@ from django_app import models
 @login_required(login_url="sign-up")
 def home(request):
     posts = models.Post.objects.all().order_by("-creation_date")
-    return render(request, "home.html", {"posts": posts})
+    if request.method == "GET":
+        return render(request, "home.html", {"posts": posts})
+    elif request.method == "POST":
+        try:
+            content = request.POST.get("content", None)
+            image = request.FILES.get("image", None)
+            if content or image:
+                post = models.Post.objects.create(
+                    user=request.user, content=content, image=image
+                )
+            else:
+                raise Exception("Unable to send an empty post")
+            return redirect("home")
+        except Exception as error:
+            return render(request, "home.html", {"posts": posts, "error": error})
 
 
 def sign_up(request):
