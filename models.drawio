@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-02-02T13:26:01.737Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36" etag="txW1Qv7wNalxSouZW4tm" version="23.1.0" type="device">
+<mxfile host="app.diagrams.net" modified="2024-02-07T15:03:53.996Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36" etag="zGwcSjrTrlWBuTY1y92A" version="23.1.1" type="device">
   <diagram name="Страница — 1" id="5FD7nR56Q4yFlG2jxHn1">
-    <mxGraphModel dx="2336" dy="813" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1401" dy="309" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -31,13 +31,13 @@
         <mxCell id="pnuQFp47O7qtw_fw8b88-32" value="Avatar" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontStyle=1;rounded=0;sketch=1;curveFitting=1;jiggle=2;" parent="pnuQFp47O7qtw_fw8b88-28" vertex="1">
           <mxGeometry y="120" width="160" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="pnuQFp47O7qtw_fw8b88-33" value="Birth Date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontStyle=1;rounded=0;sketch=1;curveFitting=1;jiggle=2;fontColor=#FF6666;" parent="pnuQFp47O7qtw_fw8b88-28" vertex="1">
+        <mxCell id="pnuQFp47O7qtw_fw8b88-33" value="Birth Date" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontStyle=1;rounded=0;sketch=1;curveFitting=1;jiggle=2;fontColor=default;" parent="pnuQFp47O7qtw_fw8b88-28" vertex="1">
           <mxGeometry y="150" width="160" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="pnuQFp47O7qtw_fw8b88-35" value="Location" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontStyle=1;rounded=0;sketch=1;curveFitting=1;jiggle=2;fontColor=#FF6666;" parent="pnuQFp47O7qtw_fw8b88-28" vertex="1">
+        <mxCell id="pnuQFp47O7qtw_fw8b88-35" value="Location" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontStyle=1;rounded=0;sketch=1;curveFitting=1;jiggle=2;fontColor=default;" parent="pnuQFp47O7qtw_fw8b88-28" vertex="1">
           <mxGeometry y="180" width="160" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="pnuQFp47O7qtw_fw8b88-34" value="Bio" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontStyle=1;rounded=0;sketch=1;curveFitting=1;jiggle=2;fontColor=#FF6666;" parent="pnuQFp47O7qtw_fw8b88-28" vertex="1">
+        <mxCell id="pnuQFp47O7qtw_fw8b88-34" value="Bio" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontStyle=1;rounded=0;sketch=1;curveFitting=1;jiggle=2;fontColor=default;" parent="pnuQFp47O7qtw_fw8b88-28" vertex="1">
           <mxGeometry y="210" width="160" height="30" as="geometry" />
         </mxCell>
         <mxCell id="pnuQFp47O7qtw_fw8b88-36" value="Post" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontFamily=Helvetica;align=center;rounded=0;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">

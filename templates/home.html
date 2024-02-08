@@ -1,4 +1,5 @@
 {% extends "components/base.html" %}
+{% load django_app_filters_and_tags %}
 {% load static %}
 {% block main %}
 <div class="flex">
@@ -82,33 +83,28 @@
                                         stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                                     </svg>
-                                    <p class="font-normal text-zinc-600 text-xs group-hover:text-sky-500">5.5K</p>
+                                    <p class="font-normal text-zinc-600 text-xs group-hover:text-sky-500">
+                                        {{ post.comments_count }}</p>
                                 </div>
                             </a>
-                            <a href="">
+                            {% with liked=post|has_like:request.user %}
+                            <a href="{% url 'like' post.id %}">
                                 <div class="flex gap-1 transition duration-500 ease-in-out group">
-                                    <svg class="group-hover:stroke-sky-500" xmlns="http://www.w3.org/2000/svg"
-                                        width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#52525b"
-                                        stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                    <svg class="group-hover:stroke-sky-500 {% if liked %} fill-sky-500 {% endif %}"
+                                        xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="#52525b" stroke-width="1" stroke-linecap="round"
+                                        stroke-linejoin="round">
                                         <path
                                             d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
                                         </path>
                                     </svg>
-                                    <p class="font-normal text-zinc-600 text-xs group-hover:text-sky-500">35K</p>
+                                    <p
+                                        class="font-normal {% if liked %} text-sky-500 {% else %} text-zinc-600 {% endif %} text-xs group-hover:text-sky-500">
+                                        {{ post.likes_count }}</p>
                                 </div>
                             </a>
+                            {% endwith %}
                             <!-- TODO Implement a post view count system -->
-                            <!-- <a href="">
-                                <div class="flex gap-1 transition duration-500 ease-in-out group">
-                                    <svg class="group-hover:stroke-sky-500" xmlns="http://www.w3.org/2000/svg" width="20"
-                                        height="20" viewBox="0 0 24 24" fill="none" stroke="#52525b" stroke-width="1"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                        <circle cx="12" cy="12" r="3"></circle>
-                                    </svg>
-                                    <p class="font-normal text-zinc-600 text-xs group-hover:text-sky-500">2.3M</p>
-                                </div>
-                            </a> -->
                         </div>
                         <a href="">
                             <svg class="hover:stroke-sky-500" xmlns="http://www.w3.org/2000/svg" width="20" height="20"

@@ -74,32 +74,21 @@
             <li class="p-4">
                 <p class="font-semibold text-white text-xl">Who to follow</p>
             </li>
+            {% for popular_user in popular_users %}
             <li
                 class="flex gap-4 items-center justify-between p-4 transition duration-500 ease-in-out cursor-pointer hover:bg-zinc-800">
                 <div class="flex gap-3">
-                    <img class="w-10 h-10 rounded-full" src="{% static 'media\profile\avatars\E5Ks-y-H_400x400.jpg' %}">
+                    <img class="w-10 h-10 rounded-full" src="{% static popular_user.user.profile.avatar.url %}">
                     <a href="">
-                        <p class="font-semibold text-white text-sm">Qasym-Jomart Toqayev</p>
-                        <p class="font-normal text-gray-400 text-xs mb-1">@TokayevKZ</p>
+                        <p class="font-semibold text-white text-sm">{{ popular_user.user.profile.name }}</p>
+                        <p class="font-normal text-gray-400 text-xs mb-1">@{{ popular_user.user.username }}</p>
                     </a>
                 </div>
                 <button class="h-8 bg-white rounded-full">
                     <p class="font-semibold text-sm px-4">Follow</p>
                 </button>
             </li>
-            <li
-                class="flex gap-4 items-center justify-between p-4 transition duration-500 ease-in-out cursor-pointer hover:bg-zinc-800">
-                <div class="flex gap-3">
-                    <img class="w-10 h-10 rounded-full" src="{% static 'media\profile\avatars\vJ5YAVz1_400x400.jpg' %}">
-                    <a href="">
-                        <p class="font-semibold text-white text-sm">President Press Office</p>
-                        <p class="font-normal text-gray-400 text-xs mb-1">@aqorda_press</p>
-                    </a>
-                </div>
-                <button class="h-8 bg-white rounded-full">
-                    <p class="font-semibold text-sm px-4 py-1">Follow</p>
-                </button>
-            </li>
+            {% endfor %}
             <li class="p-4 transition duration-500 ease-in-out cursor-pointer hover:bg-zinc-800 rounded-lg">
                 <a href="">
                     <p class="font-semibold text-sky-500 text-sm">Show more</p>

@@ -74,3 +74,13 @@ def sign_in(request):
 def sign_out(request):
     logout(request)
     return redirect("sign-in")
+
+
+def like(request, id):
+    post = models.Post.objects.get(id=id)
+    like = models.Like.objects.filter(user=request.user, post=post)
+    if like:
+        like.delete()
+    else:
+        like = models.Like.objects.create(user=request.user, post=post)
+    return redirect("home")

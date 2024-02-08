@@ -53,6 +53,8 @@ class Profile(models.Model):
     class Meta:
         app_label = "auth"
         ordering = ("-user",)
+        verbose_name = "Profile"
+        verbose_name_plural = "Profiles"
 
     def __str__(self):
         return f"{self.user} - {self.name}"
@@ -87,5 +89,68 @@ class Post(models.Model):
         verbose_name="Creation date", auto_now_add=True, null=False, blank=True
     )
 
+    class Meta:
+        app_label = "django_app"
+        ordering = ("-creation_date",)
+        verbose_name = "Post"
+        verbose_name_plural = "Posts"
+
     def __str__(self):
         return f"{self.user.username} - {self.creation_date}"
+
+    def likes_count(self):
+        return Like.objects.filter(post=self).count()
+
+    def comments_count(self):
+        return Comment.objects.filter(post=self).count()
+
+
+class Like(models.Model):
+    user = models.ForeignKey(
+        verbose_name="User", to=User, on_delete=models.CASCADE, null=False, blank=True
+    )
+    post = models.ForeignKey(
+        verbose_name="Post", to=Post, on_delete=models.CASCADE, null=False, blank=True
+    )
+
+    class Meta:
+        app_label = "django_app"
+        verbose_name = "Like"
+        verbose_name_plural = "Likes"
+
+    def __str__(self):
+        return f"{self.user.username} - {self.post}"
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(
+        verbose_name="User", to=User, on_delete=models.CASCADE, null=False, blank=True
+    )
+    post = models.ForeignKey(
+        verbose_name="Post", to=Post, on_delete=models.CASCADE, null=False, blank=True
+    )
+    content = models.TextField(
+        verbose_name="Content",
+        blank=False,
+        null=True,
+        max_length=255,
+    )
+    image = models.ImageField(
+        verbose_name="Image",
+        validators=[FileExtensionValidator(["jpg", "png", "jpeg"])],
+        upload_to="comments/image",
+        null=True,
+        blank=False,
+    )
+    creation_date = models.DateTimeField(
+        verbose_name="Creation date", auto_now_add=True, null=False, blank=True
+    )
+
+    class Meta:
+        app_label = "django_app"
+        ordering = ("-creation_date",)
+        verbose_name = "Comment"
+        verbose_name_plural = "Comments"
+
+    def __str__(self):
+        return f"{self.user.username} - {self.post}"
