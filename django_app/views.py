@@ -26,6 +26,31 @@ def home(request):
             return render(request, "home.html", {"posts": posts, "error": error})
 
 
+@login_required(login_url="sign-up")
+def post(request, id):
+    post = models.Post.objects.get(id=id)
+    comments = models.Comment.objects.filter(post=post).order_by("-creation_date")
+    if request.method == "GET":
+        return render(request, "post.html", {"post": post, "comments": comments})
+    elif request.method == "POST":
+        try:
+            content = request.POST.get("content", None)
+            image = request.FILES.get("image", None)
+            if content or image:
+                comment = models.Comment.objects.create(
+                    user=request.user, post=post, content=content, image=image
+                )
+            else:
+                raise Exception("Unable to send an empty comment")
+            return redirect("post", id)
+        except Exception as error:
+            return render(
+                request,
+                "post.html",
+                {"post": post, "comments": comments, "error": error},
+            )
+
+
 def sign_up(request):
     if request.method == "POST":
         try:
