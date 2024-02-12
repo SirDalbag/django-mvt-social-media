@@ -1,7 +1,7 @@
 {% load static %}
 <footer class="flex px-12 lg:w-96 2xl:w-full hidden lg:block">
     <div class="flex flex-col gap-4 items-start justify-start lg:w-80 xl:w-96">
-        <form method="GET" class="sticky top-0 bg-black pb-1.5">
+        <form method="GET" action="{% url 'search' %}" class="sticky top-0 bg-black pb-1.5">
             {% csrf_token %}
             <div class="relative mt-2 rounded-md shadow-sm">
                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -12,10 +12,10 @@
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
                 </div>
-                <input type="text" name="search" id="search"
+                <input type="text" id="search" name="search"
                     class="block w-full rounded-full border-0 py-3 pl-12 pr-36 bg-zinc-900 text-gray-400 font-semibold ring-inset focus:ring-2 focus:ring-inset focus:ring-sky-500 focus:text-gray-100 focus:bg-black"
-                    placeholder="Search">
-                <button id="clear"
+                    placeholder="Search" value="{{ search }}" required>
+                <button id="clear" type="button"
                     class="absolute inset-y-0 right-0 flex items-center pr-3 stroke-sky-500 cursor-pointer mr-1 hidden">
                     <svg id="icon" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
                         stroke="#a1a1aa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -41,27 +41,27 @@
                 <p class="font-semibold text-white text-xl">Trends for you</p>
             </li>
             <li class="p-4 transition duration-500 ease-in-out cursor-pointer hover:bg-zinc-800">
-                <a href="">
+                <a href="{% url 'search' %}?search=World&filter=posts">
                     <p class="font-normal text-gray-400 text-sm mb-1">Trending in Kazakhstan</p>
                     <p class="font-semibold text-white text-base">World</p>
                 </a>
             </li>
             <li class="p-4 transition duration-500 ease-in-out cursor-pointer hover:bg-zinc-800">
-                <a href="">
+                <a href="{% url 'search' %}?search=Kazakhstan&filter=posts">
                     <p class="font-normal text-gray-400 text-sm mb-1">Trending in Kazakhstan</p>
                     <p class="font-semibold text-white text-base">Kazakhstan</p>
                 </a>
             </li>
             <li class="p-4 transition duration-500 ease-in-out cursor-pointer hover:bg-zinc-800">
-                <a href="">
+                <a href="{% url 'search' %}?search=Starship&filter=posts">
                     <p class="font-normal text-gray-400 text-sm mb-1">Trending in Kazakhstan</p>
-                    <p class="font-semibold text-white text-base">Almaty</p>
+                    <p class="font-semibold text-white text-base">Starship</p>
                 </a>
             </li>
             <li class="p-4 transition duration-500 ease-in-out cursor-pointer hover:bg-zinc-800">
-                <a href="">
+                <a href="{% url 'search' %}?search=Elon&filter=posts">
                     <p class="font-normal text-gray-400 text-sm mb-1">Trending in Kazakhstan</p>
-                    <p class="font-semibold text-white text-base">Astana</p>
+                    <p class="font-semibold text-white text-base">Elon Musk</p>
                 </a>
             </li>
             <li class="p-4 transition duration-500 ease-in-out cursor-pointer hover:bg-zinc-800 rounded-b-lg">
@@ -79,7 +79,7 @@
                 class="flex gap-4 items-center justify-between p-4 transition duration-500 ease-in-out cursor-pointer hover:bg-zinc-800">
                 <div class="flex gap-3">
                     <img class="w-10 h-10 rounded-full" src="{% static popular_user.user.profile.avatar.url %}">
-                    <a href="">
+                    <a href="{% url 'profile' popular_user.user.username 'posts' %}">
                         <p class="font-semibold text-white text-sm">{{ popular_user.user.profile.name }}</p>
                         <p class="font-normal text-gray-400 text-xs mb-1">@{{ popular_user.user.username }}</p>
                     </a>

@@ -32,11 +32,6 @@ class Profile(models.Model):
         default="profile/avatars/default.svg",
         upload_to="profile/avatars",
     )
-    birth_date = models.DateField(
-        verbose_name="Birth Date",
-        blank=False,
-        null=True,
-    )
     location = models.CharField(
         verbose_name="Location",
         blank=False,

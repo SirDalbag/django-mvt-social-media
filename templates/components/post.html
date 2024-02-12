@@ -1,0 +1,63 @@
+{% load django_app_filters_and_tags %}
+{% load static %}
+<div
+    class="flex flex-col gap-3 border-b-2 md:border-b border-zinc-900 p-4 transition duration-500 ease-in-out hover:bg-zinc-800 hover:bg-opacity-25">
+    <div class="flex gap-3">
+        <img class="w-8 h-8 2xl:w-10 2xl:h-10 rounded-full" src="{% static post.user.profile.avatar.url %}">
+        <div class="flex flex-col gap-1 flex-grow">
+            <div class="flex flex-wrap gap-3 items-center">
+                <a href="{% url 'profile' post.user.username 'posts' %}">
+                    <p class="font-semibold text-white text-lg hover:underline">{{ post.user.profile.name }}</p>
+                </a>
+                <a href="{% url 'profile' post.user.username 'posts' %}">
+                    <p class="font-normal text-gray-400 text-sm mt-1">@{{ post.user.username }}</p>
+                </a>
+                <p class="font-normal text-gray-400 text-sm mt-1">{{ post.creation_date }}</p>
+            </div>
+            <p class="font-normal text-white text-lg">{{ post.content }}</p>
+            {% if post.image %}
+            <img src="{% static post.image.url %}" class="rounded-lg border-2 border-zinc-900">
+            {% endif %}
+            <div class="flex gap-3 mt-2 justify-between">
+                <div class="flex gap-3">
+                    <a href="{% url 'post' post.id %}">
+                        <div class="flex gap-1 transition duration-500 ease-in-out group">
+                            <svg class="group-hover:stroke-sky-500" xmlns="http://www.w3.org/2000/svg" width="20"
+                                height="20" viewBox="0 0 24 24" fill="none" stroke="#52525b" stroke-width="1"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                            </svg>
+                            <p class="font-normal text-zinc-600 text-xs group-hover:text-sky-500">
+                                {{ post.comments_count }}</p>
+                        </div>
+                    </a>
+                    {% with liked=post|has_like:request.user %}
+                    <a href="{% url 'like' post.id %}">
+                        <div class="flex gap-1 transition duration-500 ease-in-out group">
+                            <svg class="group-hover:stroke-sky-500 {% if liked %} fill-sky-500 {% endif %}"
+                                xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="#52525b" stroke-width="1" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path
+                                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                </path>
+                            </svg>
+                            <p
+                                class="font-normal {% if liked %} text-sky-500 {% else %} text-zinc-600 {% endif %} text-xs group-hover:text-sky-500">
+                                {{ post.likes_count }}</p>
+                        </div>
+                    </a>
+                    {% endwith %}
+                    <!-- TODO Implement a post view count system -->
+                </div>
+                <a href="">
+                    <svg class="hover:stroke-sky-500" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                        viewBox="0 0 24 24" fill="none" stroke="#52525b" stroke-width="1" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

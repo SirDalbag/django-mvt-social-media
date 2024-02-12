@@ -1,0 +1,41 @@
+{% extends "components/authorization.html" %}
+{% load static %}
+{% block form %}
+<div class="flex flex-col">
+    <p class="text-2xl text-white font-semibold mb-12 xl:text-5xl">Edit your profile</p>
+    <form method="POST" enctype="multipart/form-data" class="flex flex-col gap-3 mb-4">
+        {% csrf_token %}
+        <label for="avatar"
+            class="flex justify-center cursor-pointer transition-transform duration-300 ease-in-out transform-gpu hover:scale-105">
+            <img id="preview" class="rounded-full w-24 h-24 2xl:w-32 2xl:h-32" src="{% static profile.avatar.url %}">
+        </label>
+        <input name="avatar" id="avatar" class="hidden" type="file" onchange="previewImage(event)" />
+        <input type="text" name="name" id="name"
+            class="transition duration-300 ease-in-out block w-full rounded-md border-0 py-3 pl-4 xl:pr-36 bg-zinc-900 text-gray-400 font-semibold ring-inset focus:ring-2 focus:ring-inset focus:ring-sky-500 focus:text-gray-100 focus:bg-black"
+            placeholder="Name" value="{{ profile.name }}" required>
+        <input type="email" name="email" id="email"
+            class="transition duration-300 ease-in-out block w-full rounded-md border-0 py-3 pl-4 xl:pr-36 bg-zinc-900 text-gray-400 font-semibold ring-inset focus:ring-2 focus:ring-inset focus:ring-sky-500 focus:text-gray-100 focus:bg-black"
+            placeholder="Email" value="{% if profile.user.email %} {{ profile.user.email }} {% endif %}">
+        <input type="text" name="location" id="location"
+            class="transition duration-300 ease-in-out block w-full rounded-md border-0 py-3 pl-4 xl:pr-36 bg-zinc-900 text-gray-400 font-semibold ring-inset focus:ring-2 focus:ring-inset focus:ring-sky-500 focus:text-gray-100 focus:bg-black"
+            placeholder="Location" value="{% if profile.location %}{{ profile.location }}{% endif %}">
+        <textarea name="bio" id="bio"
+            class="rounded-lg block w-full border-0 py-3 bg-zinc-900 text-gray-400 font-semibold ring-inset focus:ring-2 focus:ring-inset focus:ring-sky-500 focus:text-gray-100 focus:bg-black"
+            placeholder="Bio" value="{% if profile.bio %} {{ profile.bio }} {% endif %}" rows="1"></textarea>
+        <button
+            class="transition duration-300 ease-in-out h-12 bg-white rounded-full hover:bg-black hover:text-white hover:border-2 hover:border-white"
+            type="submit">
+            <p class="font-semibold text-base px-4">Save</p>
+        </button>
+    </form>
+    {% if error %}
+    <p class="text-xl text-rose-600 font-semibold mb-4">{{ error }}</p>
+    {% endif %}
+    <button
+        class="transition duration-300 ease-in-out h-12 border-2 rounded-full text-white hover:bg-white hover:text-black hover:border-black">
+        <a href="{% url 'profile' profile.user.username 'posts' %}">
+            <p class="font-semibold text-base px-4">Cancel</p>
+        </a>
+    </button>
+</div>
+{% endblock form %}

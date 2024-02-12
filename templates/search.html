@@ -1,0 +1,57 @@
+{% extends "components/base.html" %}
+{% load django_app_filters_and_tags %}
+{% load static %}
+{% block title %} {{ search|short }} {% endblock title %}
+{% block main %}
+<div class="flex">
+    {% include "components/header.html" %}
+    <main class="w-full min-h-screen border-x-2 md:border-x border-zinc-900">
+        <div class="sticky top-0 z-20 bg-black bg-opacity-65 bg-blur backdrop-filter backdrop-blur-lg">
+            <div class="grid grid-cols-2 w-full border-b-2 md:border-b border-zinc-900">
+                <a href="{% url 'search' %}?search={{ search }}&filter=posts">
+                    <div class="flex justify-center p-4 transition duration-500 ease-in-out hover:bg-zinc-900">
+                        <p
+                            class="font-semibold {% if filter == 'posts' %} text-white {% else %} text-gray-400 {% endif %} text-base">
+                            Posts</p>
+                    </div>
+                </a>
+                <a href="{% url 'search' %}?search={{ search }}&filter=users">
+                    <div class="flex justify-center p-4 transition duration-500 ease-in-out hover:bg-zinc-900">
+                        <p
+                            class="font-semibold {% if filter == 'users' %} text-white {% else %} text-gray-400 {% endif %} text-base">
+                            Users</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% if filter == "users" %}
+        {% for profile in profiles %}
+        <a href="{% url 'profile' profile.user.username 'posts' %}">
+            <div
+                class="flex gap-3 p-4 border-b-2 md:border-b border-zinc-900 p-4 transition duration-500 ease-in-out hover:bg-zinc-800 hover:bg-opacity-25">
+                <img class="w-8 h-8 2xl:w-12 2xl:h-12 rounded-full" src="{% static profile.avatar.url %}">
+                <div class="flex flex-col">
+                    <p class="font-semibold text-white text-lg mb-1">{{ profile.name }}</p>
+                    <p class="font-normal text-zinc-600 text-base">@{{ profile.user.username }}</p>
+                </div>
+            </div>
+        </a>
+        {% empty %}
+        <div class="h-full text-center py-4 border-b-2 md:border-b border-zinc-900">
+            <p class="font-normal text-zinc-600 text-base">There are no users</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% if filter == "posts" %}
+        {% for post in posts %}
+        {% include "components/post.html" %}
+        {% empty %}
+        <div class="h-full text-center py-4 border-b-2 md:border-b border-zinc-900">
+            <p class="font-normal text-zinc-600 text-base">There are no posts</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </main>
+    {% include "components/footer.html" %}
+</div>
+{% endblock main %}

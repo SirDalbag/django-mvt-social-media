@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from django_app import models
 
 
@@ -49,6 +50,70 @@ def post(request, id):
                 "post.html",
                 {"post": post, "comments": comments, "error": error},
             )
+
+
+@login_required(login_url="sign-up")
+def profile(request, username, type):
+    user = User.objects.get(username=username)
+    profile = models.Profile.objects.get(user=user)
+    if type == "posts":
+        content = models.Post.objects.filter(user=user).order_by("-creation_date")
+    elif type == "replies":
+        content = models.Comment.objects.filter(user=user).order_by("-creation_date")
+    elif type == "likes":
+        content = models.Post.objects.filter(like__user=user)
+    return render(
+        request, "profile.html", {"profile": profile, "content": content, "type": type}
+    )
+
+
+def edit(request):
+    profile = models.Profile.objects.get(user=request.user)
+    if request.method == "GET":
+        return render(request, "edit.html", {"profile": profile})
+    elif request.method == "POST":
+        try:
+            name = request.POST.get("name", None)
+            email = request.POST.get("email", None)
+            location = request.POST.get("location", None)
+            bio = request.POST.get("bio", None)
+            avatar = request.FILES.get("avatar", None)
+            if name and name != profile.name:
+                profile.name = name
+            if email and email != profile.user.email:
+                profile.user.email = email
+            if location and location != profile.location:
+                profile.location = location
+            if bio and bio != profile.bio:
+                profile.bio = bio
+            if avatar:
+                profile.avatar = avatar
+            profile.save()
+            return redirect("profile", profile.user.username, "posts")
+        except Exception as error:
+            return render(request, "edit.html", {"profile": profile, "error": error})
+
+
+def search(request):
+    search = request.GET.get("search", "")
+    filter = request.GET.get("filter", "posts")
+    profiles, posts = [], []
+    if filter == "posts":
+        posts = models.Post.objects.filter(content__icontains=search)
+    elif filter == "users":
+        profiles = models.Profile.objects.filter(
+            Q(name__icontains=search) | Q(user__username__icontains=search)
+        )
+    return render(
+        request,
+        "search.html",
+        {
+            "profiles": profiles,
+            "posts": posts,
+            "search": search,
+            "filter": filter,
+        },
+    )
 
 
 def sign_up(request):

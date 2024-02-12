@@ -1,0 +1,105 @@
+{% extends "components/base.html" %}
+{% load django_app_filters_and_tags %}
+{% load static %}
+{% block title %} {{ profile.name }} {% endblock title %}
+{% block main %}
+<div class="flex">
+    {% include "components/header.html" %}
+    <main class="w-full min-h-screen border-x-2 md:border-x border-zinc-900">
+        <div class="sticky top-0 z-20 bg-black bg-opacity-65 bg-blur backdrop-filter backdrop-blur-lg">
+            <div class="flex items-center gap-3 p-4">
+                <a href="{% url 'home' %}"
+                    class="mt-1 transition duration-500 ease-in-out cursor-pointer rounded-full hover:bg-zinc-800">
+                    <svg class="m-1.5" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                        fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H6M12 5l-7 7 7 7" />
+                    </svg>
+                </a>
+                <p class="font-semibold text-white text-xl">{{ profile.name }}</p>
+            </div>
+        </div>
+        <div class="flex flex-col gap-3 border-y-2 md:border-y border-zinc-900 p-4">
+            <div class="flex justify-between">
+                <div class="flex gap-3">
+                    <img class="w-24 h-24 2xl:w-16 2xl:h-16 rounded-full" src="{% static profile.avatar.url %}">
+                    <div class="flex flex-col">
+                        <p class="font-semibold text-white text-xl mb-1">{{ profile.name }}</p>
+                        <p class="font-normal text-zinc-600 text-lg">@{{ profile.user.username }}</p>
+                    </div>
+                </div>
+                {% if request.user == profile.user %}
+                <a href="{% url 'edit' %}">
+                    <button class="h-8 bg-white rounded-full">
+                        <p class="font-semibold text-sm px-4">Edit Profile</p>
+                    </button>
+                </a>
+                {% else %}
+                <button class="h-8 bg-white rounded-full">
+                    <p class="font-semibold text-sm px-4">Follow</p>
+                </button>
+                {% endif %}
+            </div>
+            {% if profile.bio %}
+            <p class="font-normal text-white text-base">{{ profile.bio }}</p>
+            {% endif %}
+            <div class="flex gap-3">
+                <a href="">
+                    <p class="font-normal text-zinc-600 text-base hover:underline"><span
+                            class="text-white font-semibold">0</span>
+                        Followers
+                    </p>
+                </a>
+                <a href="">
+                    <p class="font-normal text-zinc-600 text-base hover:underline"><span
+                            class="text-white font-semibold">0</span>
+                        Following
+                    </p>
+                </a>
+            </div>
+        </div>
+        <div class="grid grid-cols-3 w-full border-b-2 md:border-b border-zinc-900">
+            <a href="{% url 'profile' profile.user.username 'posts' %}">
+                <div class="flex justify-center p-4 transition duration-500 ease-in-out hover:bg-zinc-900">
+                    <p
+                        class="font-semibold {% if type == 'posts' %} text-white {% else %} text-gray-400 {% endif %} text-base">
+                        Posts</p>
+                </div>
+            </a>
+            <a href="{% url 'profile' profile.user.username 'replies' %}">
+                <div class="flex justify-center p-4 transition duration-500 ease-in-out hover:bg-zinc-900">
+                    <p
+                        class="font-semibold {% if type == 'replies' %} text-white {% else %} text-gray-400 {% endif %} text-base">
+                        Replies</p>
+
+                </div>
+            </a>
+            <a href="{% url 'profile' profile.user.username 'likes' %}">
+                <div class="flex justify-center p-4 transition duration-500 ease-in-out hover:bg-zinc-900">
+                    <p
+                        class="font-semibold {% if type == 'likes' %} text-white {% else %} text-gray-400 {% endif %} text-base">
+                        Likes</p>
+                </div>
+            </a>
+        </div>
+        {% if type == 'posts' or type == 'likes' %}
+        {% for post in content %}
+        {% include "components/post.html" %}
+        {% empty %}
+        <div class="h-screen text-center py-4 border-b-2 md:border-b border-zinc-900">
+            <p class="font-normal text-zinc-600 text-base">There are no {% if type == 'likes' %} likes {% else %} posts
+                {% endif %}</p>
+        </div>
+        {% endfor %}
+        {% elif type == 'replies' %}
+        {% for comment in content %}
+        {% include "components/comment.html" %}
+        {% empty %}
+        <div class="h-screen text-center py-4 border-b-2 md:border-b border-zinc-900">
+            <p class="font-normal text-zinc-600 text-base">There are no comments</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </main>
+    {% include "components/footer.html" %}
+</div>
+{% endblock main %}

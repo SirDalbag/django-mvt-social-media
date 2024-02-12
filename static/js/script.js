@@ -9,17 +9,26 @@ function updatePostButtonState() {
     postButton.disabled = !contentInput.value.trim().replace(/\s/g, '') && imageInput.files.length === 0;
 }
 
-contentInput.addEventListener('input', updatePostButtonState);
-imageInput.addEventListener('change', updatePostButtonState);
+if (contentInput) {
+    contentInput.addEventListener('input', updatePostButtonState);
+}
 
-searchInput.addEventListener('input', function () {
-    clearButton.classList.toggle('hidden', !searchInput.value);
-});
+if (clearButton) {
+    clearButton.addEventListener('click', function () {
+        searchInput.value = '';
+        clearButton.classList.add('hidden');
+    });
+}
 
-clearButton.addEventListener('click', function () {
-    searchInput.value = '';
-    clearButton.classList.add('hidden');
-});
+if (imageInput) {
+    imageInput.addEventListener('change', updatePostButtonState);
+}
+
+if (searchInput) {
+    searchInput.addEventListener('input', function () {
+        clearButton.classList.toggle('hidden', !searchInput.value);
+    });
+}
 
 focusIcons.forEach((focusIcon) => {
     searchInput.addEventListener('focus', function () {
@@ -32,13 +41,12 @@ focusIcons.forEach((focusIcon) => {
 });
 
 function displayImage(input) {
-    var imageContainer = document.getElementById('container');
-
+    let imageContainer = document.getElementById('container');
     if (input.files && input.files[0]) {
-        var reader = new FileReader();
+        let reader = new FileReader();
         reader.onload = function (e) {
-            var imageContainerItem = document.createElement('div');
-            var uniqueId = Date.now();
+            let imageContainerItem = document.createElement('div');
+            let uniqueId = Date.now();
             imageContainerItem.id = `imageItem_${uniqueId}`;
             imageContainerItem.className = 'z-10 w-full sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-1/2';
             imageContainerItem.innerHTML = `
@@ -59,10 +67,23 @@ function displayImage(input) {
 }
 
 function removeImage(uniqueId) {
-    var imageContainerItem = document.getElementById(`imageItem_${uniqueId}`);
+    let imageContainerItem = document.getElementById(`imageItem_${uniqueId}`);
     if (imageContainerItem) {
         imageContainerItem.remove();
         imageInput.value = '';
         updatePostButtonState();
+    }
+}
+
+function previewImage(event) {
+    let inputElement = event.target;
+    let files = inputElement.files;
+    if (files.length > 0) {
+        let previewImageElement = document.getElementById('preview');
+        let reader = new FileReader();
+        reader.onload = function (e) {
+            previewImageElement.src = e.target.result;
+        };
+        reader.readAsDataURL(files[0]);
     }
 }

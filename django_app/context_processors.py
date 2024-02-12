@@ -8,7 +8,7 @@ def profile(request):
         if request.user.is_authenticated
         else None
     )
-    return {"profile": profile}
+    return {"user_profile": profile}
 
 
 def popular_users(request):
