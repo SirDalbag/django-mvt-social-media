@@ -15,3 +15,10 @@ def short(text):
 @register.filter(name="has_like")
 def has_like(post, user):
     return models.Like.objects.filter(post=post, user=user).exists()
+
+
+@register.filter(name="is_following")
+def is_following(user, other_user):
+    return not models.Subscription.objects.filter(
+        follower=user, following=other_user
+    ).exists()

@@ -1,3 +1,4 @@
+{% load django_app_filters_and_tags %}
 {% load static %}
 <footer class="flex px-12 lg:w-96 2xl:w-full hidden lg:block">
     <div class="flex flex-col gap-4 items-start justify-start lg:w-80 xl:w-96">
@@ -75,6 +76,7 @@
                 <p class="font-semibold text-white text-xl">Who to follow</p>
             </li>
             {% for popular_user in popular_users %}
+            {% if popular_user.user != request.user %}
             <li
                 class="flex gap-4 items-center justify-between p-4 transition duration-500 ease-in-out cursor-pointer hover:bg-zinc-800">
                 <div class="flex gap-3">
@@ -84,10 +86,18 @@
                         <p class="font-normal text-gray-400 text-xs mb-1">@{{ popular_user.user.username }}</p>
                     </a>
                 </div>
-                <button class="h-8 bg-white rounded-full">
-                    <p class="font-semibold text-sm px-4">Follow</p>
-                </button>
+                {% with followed=request.user|is_following:popular_user.user %}
+                <form action="{% url 'follow' id=popular_user.user.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="h-8 rounded-full {% if followed %} border-[1px] {% else %} bg-white {% endif %}"
+                        type="submit">
+                        <p class="font-semibold text-sm px-4 {% if followed %} text-white {% endif %}">{% if followed %}
+                            Following {% else %} Follow {% endif %}</p>
+                    </button>
+                </form>
+                {% endwith %}
             </li>
+            {% endif %}
             {% endfor %}
             <li class="p-4 transition duration-500 ease-in-out cursor-pointer hover:bg-zinc-800 rounded-lg">
                 <a href="">

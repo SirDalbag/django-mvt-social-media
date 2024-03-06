@@ -9,12 +9,12 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(
-        verbose_name="User",
+        to=User,
         blank=True,
         null=False,
-        to=User,
-        on_delete=models.CASCADE,
+        verbose_name="User",
         related_name="profile",
+        on_delete=models.CASCADE,
     )
     name = models.CharField(
         verbose_name="Name",
@@ -65,7 +65,7 @@ def profile_create(sender, instance, created, **kwargs):
 
 class Post(models.Model):
     user = models.ForeignKey(
-        verbose_name="User", to=User, on_delete=models.CASCADE, null=False, blank=True
+        to=User, null=False, blank=True, verbose_name="User", on_delete=models.CASCADE
     )
     content = models.TextField(
         verbose_name="Content",
@@ -102,10 +102,10 @@ class Post(models.Model):
 
 class Like(models.Model):
     user = models.ForeignKey(
-        verbose_name="User", to=User, on_delete=models.CASCADE, null=False, blank=True
+        to=User, null=False, blank=True, verbose_name="User", on_delete=models.CASCADE
     )
     post = models.ForeignKey(
-        verbose_name="Post", to=Post, on_delete=models.CASCADE, null=False, blank=True
+        to=Post, null=False, blank=True, verbose_name="Post", on_delete=models.CASCADE
     )
 
     class Meta:
@@ -119,10 +119,10 @@ class Like(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(
-        verbose_name="User", to=User, on_delete=models.CASCADE, null=False, blank=True
+        to=User, null=False, blank=True, verbose_name="User", on_delete=models.CASCADE
     )
     post = models.ForeignKey(
-        verbose_name="Post", to=Post, on_delete=models.CASCADE, null=False, blank=True
+        to=Post, null=False, blank=True, verbose_name="Post", on_delete=models.CASCADE
     )
     content = models.TextField(
         verbose_name="Content",
@@ -149,3 +149,31 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.post}"
+
+
+class Subscription(models.Model):
+    follower = models.ForeignKey(
+        to=User,
+        null=False,
+        blank=True,
+        verbose_name="Follower",
+        related_name="follower",
+        on_delete=models.CASCADE,
+    )
+    following = models.ForeignKey(
+        to=User,
+        null=False,
+        blank=True,
+        verbose_name="Following",
+        related_name="following",
+        on_delete=models.CASCADE,
+    )
+
+    class Meta:
+        app_label = "django_app"
+        ordering = ("-follower",)
+        verbose_name = "Subcription"
+        verbose_name_plural = "Subcriptions"
+
+    def __str__(self):
+        return f"{self.follower.username} - {self.following.username}"

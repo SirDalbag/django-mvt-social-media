@@ -34,9 +34,16 @@
                     </button>
                 </a>
                 {% else %}
-                <button class="h-8 bg-white rounded-full">
-                    <p class="font-semibold text-sm px-4">Follow</p>
-                </button>
+                {% with followed=request.user|is_following:profile.user %}
+                <form action="{% url 'follow' id=profile.user.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="h-8 rounded-full {% if followed %} border-[1px] {% else %} bg-white {% endif %}"
+                        type="submit">
+                        <p class="font-semibold text-sm px-4 {% if followed %} text-white {% endif %}">{% if followed %}
+                            Following {% else %} Follow {% endif %}</p>
+                    </button>
+                </form>
+                {% endwith %}
                 {% endif %}
             </div>
             {% if profile.bio %}

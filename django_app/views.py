@@ -67,6 +67,7 @@ def profile(request, username, type):
     )
 
 
+@login_required(login_url="sign-up")
 def edit(request):
     profile = models.Profile.objects.get(user=request.user)
     if request.method == "GET":
@@ -94,6 +95,7 @@ def edit(request):
             return render(request, "edit.html", {"profile": profile, "error": error})
 
 
+@login_required(login_url="sign-up")
 def search(request):
     search = request.GET.get("search", "")
     filter = request.GET.get("filter", "posts")
@@ -166,6 +168,7 @@ def sign_out(request):
     return redirect("sign-in")
 
 
+@login_required(login_url="sign-up")
 def like(request, id):
     post = models.Post.objects.get(id=id)
     like = models.Like.objects.filter(user=request.user, post=post)
@@ -173,4 +176,18 @@ def like(request, id):
         like.delete()
     else:
         like = models.Like.objects.create(user=request.user, post=post)
-    return redirect("home")
+    return redirect(request.META.get("HTTP_REFERER", "/"))
+
+
+@login_required(login_url="sign-up")
+def follow(request, id):
+    subcription = models.Subscription.objects.filter(
+        follower=request.user, following=User.objects.get(id=id)
+    )
+    if subcription:
+        subcription.delete()
+    else:
+        subcription = models.Subscription.objects.create(
+            follower=request.user, following=User.objects.get(id=id)
+        )
+    return redirect(request.META.get("HTTP_REFERER", "/"))
